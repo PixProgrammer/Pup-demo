@@ -1,9 +1,11 @@
+const express = require("express");
 const puppeteer = require("puppeteer");
 const azure = require("azure-storage");
-const nodemailer = require("nodemailer");
 
-async function main() {
-    const LOGIN_URL = "https://sahrdaya.linways.com/student/";
+const app = express();
+const port = 3000;
+
+const LOGIN_URL = "https://sahrdaya.linways.com/student/";
 
     const STORAGEACCOUNTNAME = "bolbstoragedemo";
     const CONNECTIONSTRING = `DefaultEndpointsProtocol=https;AccountName=${STORAGEACCOUNTNAME};AccountKey=P/wu0DZvmLAN7/KIFK6buZhRbeBlXgY24tgSoHp1ywqH1gJyFAAtytVUyux4DG3VQ7WEpG7pdbfn+AStLhMSNg==;EndpointSuffix=core.windows.net`;
@@ -30,7 +32,9 @@ async function main() {
         }
     ];
 
-    const randomIndex = Math.floor(Math.random() * BETAUSERS.length);
+app.get("/scrape", async (req, res) => {
+    try {
+        const randomIndex = Math.floor(Math.random() * BETAUSERS.length);
     const randomUser = BETAUSERS[randomIndex];
 
     const USERNAME = randomUser.username;
@@ -200,14 +204,13 @@ async function main() {
         console.log(`Error: ${error.message}`);
     }
 
-}
-
-main().catch((error) => {
-    console.error("An error occurred:", error);
-  });
-
-
+        res.json({ message: "Scraping complete" });
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred" });
+    }
+});
 
 
-
-// Select a random user from BETAUSER
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});

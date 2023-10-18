@@ -1,7 +1,0 @@
-version: 1
-
-functions:
-  my-function:
-    handler: index.handler
-    runtime: nodejs18
-    schedule: rate(30 seconds)
