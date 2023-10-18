@@ -35,7 +35,7 @@ async function main() {
 
     const USERNAME = randomUser.username;
     const PASSWORD = randomUser.password;
-    context.log("Timer function processed request.");
+    console.log("Timer function processed request.");
 
     try {
         const browser = await puppeteer.launch();
@@ -110,7 +110,7 @@ async function main() {
                             data.push(rowData);
                         }
 
-                        context.log(data);
+                        console.log(data);
                         const jsonData = JSON.stringify(data);
 
                         // Check if the blob exists for the student
@@ -135,15 +135,15 @@ async function main() {
                                         );
 
                                         if (newObject) {
-                                            context.log("New object detected:");
-                                            context.log(newObject);
+                                            console.log("New object detected:");
+                                            console.log(newObject);
                                             // async function sentReq() {
                                             //   const endpointURL =
                                             //     "http://localhost:7071/api/LinMarkBOT";
                                             //   await axios.get(endpointURL);
                                             // }
 
-                                            // context.log("GET request sent to the endpoint.");
+                                            // console.log("GET request sent to the endpoint.");
                                         }
 
                                         // Update the blob
@@ -153,16 +153,16 @@ async function main() {
                                             jsonData,
                                             function (error, result, response) {
                                                 if (!error) {
-                                                    context.log("Blob updated successfully.");
+                                                    console.log("Blob updated successfully.");
                                                 } else {
-                                                    context.log(
+                                                    console.log(
                                                         `Error updating blob: ${error.message}`
                                                     );
                                                 }
                                             }
                                         );
                                     } else {
-                                        context.log("No changes detected, blob not updated.");
+                                        console.log("No changes detected, blob not updated.");
                                     }
                                 } else if (error && error.code === "BlobNotFound") {
                                     blobService.createBlockBlobFromText(
@@ -171,33 +171,33 @@ async function main() {
                                         jsonData,
                                         function (error, result, response) {
                                             if (!error) {
-                                                context.log("Blob created successfully.");
+                                                console.log("Blob created successfully.");
                                             } else {
-                                                context.log(`Error creating blob: ${error.message}`);
+                                                console.log(`Error creating blob: ${error.message}`);
                                             }
                                         }
                                     );
                                 } else {
-                                    context.log(`Error checking blob: ${error.message}`);
+                                    console.log(`Error checking blob: ${error.message}`);
                                 }
                             }
                         );
                     } else {
-                        context.log("Table not found.");
+                        console.log("Table not found.");
                     }
                 } else {
-                    context.log("My Performance link not found.");
+                    console.log("My Performance link not found.");
                 }
             } else {
-                context.log("Sign-in button not found.");
+                console.log("Sign-in button not found.");
             }
         } else {
-            context.log("Username and/or password input element(s) not found.");
+            console.log("Username and/or password input element(s) not found.");
         }
 
         await browser.close();
     } catch (error) {
-        context.log(`Error: ${error.message}`);
+        console.log(`Error: ${error.message}`);
     }
 
 }
